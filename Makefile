@@ -3,7 +3,9 @@ DATA_DIRS ?= v1.2/u_10 v1.2/q_10
 OUT_DIR ?= .
 MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 
-# Tested with nco/4.6.4
+# Tested with nco version 4.2.1 4.3.1, 4.5.4 4.6.4
+# Fails with nco 4.3.0 (on GFDL systems)
+# Wrong sums with nco 4.1.0 because of a "NCO" global attribute
 
 space :=
 space +=
@@ -14,9 +16,10 @@ VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
 NCKS = ncks -h
 
-all: $(MD5SUM_FILE) $(ALL_TARGETS)
+all: $(ALL_TARGETS)
 check: $(MD5SUM_FILE)
 	cd $(<D); md5sum -c $(<F)
+md5: $(MD5SUM_FILE)
 $(MD5SUM_FILE): $(foreach f,$(ALL_TARGETS),$(dir $(f))/.$(notdir $(f)).md5sum)
 	cat $^ > $@
 $(OUT_DIR)/.%.md5sum: $(OUT_DIR)/%
@@ -41,3 +44,8 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
 	rm -f head.nc tail.nc
+
+clean:
+	rm -f $(OUT_DIR)/.*.md5sum
+Clean: clean
+	rm -f $(ALL_TARGETS)
