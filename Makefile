@@ -37,11 +37,16 @@ PrevFile = $(call IfExist, $(call PrevFileName, $(1)))
 NextFileName = $(subst .$(call Year,$(1)).,.$(call YearP1,$(1)).,$(1))
 NextFile = $(call IfExist, $(call NextFileName, $(1)))
 
+TIME_TAIL = 0,7
+TIME_TAIL = 2912,
+$(OUT_DIR)/runoff%: TIME_TAIL = 364,
+$(OUT_DIR)/runoff%: TIME_HEAD = 0,0
+
 $(OUT_DIR)/%.padded.nc: %.nc
 	@echo Making $@ from $(notdir $(call PrevFile,$<)) $(notdir $<) $(notdir $(call NextFile,$<))
 	@rm -f head.nc tail.nc
-	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,2912, $(call PrevFileName,$<) head.nc || :
-	@test -f $(call NextFileName,$<) && $(NCKS) -d time,0,7 $(call NextFileName,$<) tail.nc || :
+	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,$(TIME_TAIL) $(call PrevFileName,$<) head.nc || :
+	@test -f $(call NextFileName,$<) && $(NCKS) -d time,$(TIME_HEAD) $(call NextFileName,$<) tail.nc || :
 	@test ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
 	@test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
