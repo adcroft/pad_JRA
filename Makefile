@@ -1,5 +1,5 @@
 JRA_ROOT ?= /lustre/f1/pdata/gfdl_O/datasets/reanalysis/JRA55-do
-DATA_DIRS ?= v1.2/u_10 v1.2/q_10
+DATA_DIRS ?= $(foreach v,u_10 v_10 slp t_10 sst rsds rlds q_10 rain snow ice,v1.2/$(v)) $(foreach v,runoff_all,v1.1/$(v))
 OUT_DIR ?= .
 MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 
@@ -9,9 +9,8 @@ MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 
 space :=
 space +=
-ALL_SOURCE = $(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*)))
+ALL_SOURCE = $(filter-out ice.COBESST.% sst.COBESST.%,$(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*))))
 ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)/$(f))))
-ALL_TARGETS = $(OUT_DIR)/q_10.1958.18Aug2017.padded.nc $(OUT_DIR)/q_10.1959.18Aug2017.padded.nc $(OUT_DIR)/q_10.1960.18Aug2017.padded.nc $(OUT_DIR)/q_10.1961.18Aug2017.padded.nc
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
 NCKS = ncks -h
