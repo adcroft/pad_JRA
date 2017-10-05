@@ -21,9 +21,11 @@ check: $(MD5SUM_FILE)
 	cd $(<D); md5sum -c $(<F)
 md5: $(MD5SUM_FILE)
 $(MD5SUM_FILE): $(foreach f,$(ALL_TARGETS),$(dir $(f))/.$(notdir $(f)).md5sum)
-	cat $^ > $@
+	@echo Constructing $@
+	@cat $^ > $@
 $(OUT_DIR)/.%.md5sum: $(OUT_DIR)/%
-	cd $(@D); md5sum $(^F) | tee $(@F)
+	@echo Calculating $(@F)
+	@cd $(@D); md5sum $(^F) | tee $(@F)
 
 Year = $(word 2,$(subst .,$(space),$(notdir $(1))))
 YearM1 = $(shell echo $(call Year,$(1))-1 | bc)
@@ -37,13 +39,13 @@ NextFile = $(call IfExist, $(call NextFileName, $(1)))
 
 $(OUT_DIR)/%.padded.nc: %.nc
 	@echo Making $@ from $(notdir $(call PrevFile,$<)) $(notdir $<) $(notdir $(call NextFile,$<))
-	rm -f head.nc tail.nc
-	test -f $(call PrevFileName,$<) && $(NCKS) -d time,2912, $(call PrevFileName,$<) head.nc || :
-	test -f $(call NextFileName,$<) && $(NCKS) -d time,0,7 $(call NextFileName,$<) tail.nc || :
-	test ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
-	test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
-	test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
-	rm -f head.nc tail.nc
+	@rm -f head.nc tail.nc
+	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,2912, $(call PrevFileName,$<) head.nc || :
+	@test -f $(call NextFileName,$<) && $(NCKS) -d time,0,7 $(call NextFileName,$<) tail.nc || :
+	@test ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
+	@test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
+	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
+	@rm -f head.nc tail.nc
 
 clean:
 	rm -f $(OUT_DIR)/.*.md5sum
