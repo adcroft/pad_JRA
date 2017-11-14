@@ -36,7 +36,7 @@ PrevFile = $(call IfExist, $(call PrevFileName, $(1)))
 NextFileName = $(subst .$(call Year,$(1)).,.$(call YearP1,$(1)).,$(1))
 NextFile = $(call IfExist, $(call NextFileName, $(1)))
 
-TIME_TAIL = 0,7
+TIME_HEAD = 0,7
 TIME_TAIL = 2912,
 $(OUT_DIR)/runoff%: TIME_TAIL = 364,
 $(OUT_DIR)/runoff%: TIME_HEAD = 0,0
