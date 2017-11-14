@@ -39,6 +39,10 @@ The gnu Makefile uses `ncks` and `ncrcat` from the
 [nco](http://nco.sourceforge.net/) netcdf-utilities package.
 Use versions later than 4.2.1 to ensure the files are bitwise reproducible.
 
+## What happens
+
+Each file found in `$(DATA_DIRS)` is padded by the last day at the end of the preceding year and the first day of the next year. The result is placed in `$(OUT_DIR)` with the _.nc_ sufffix replaced with _.padded.nc_ .
+
 ## Checksums
 
 The JRA55-do data uses the "classic" netcdf format which does not have
