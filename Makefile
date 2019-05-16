@@ -1,5 +1,5 @@
-JRA_ROOT ?= /lustre/f1/pdata/gfdl_O/datasets/reanalysis/JRA55-do
-DATA_DIRS ?= $(foreach v,u_10 v_10 slp t_10 sst rsds rlds q_10 rain snow ice,v1.2/$(v)) $(foreach v,runoff_all,v1.1/$(v))
+JRA_ROOT ?= /lustre/f2/pdata/gfdl/gfdl_O/datasets/reanalysis/JRA55-do/v1.4.0/
+DATA_DIRS ?= original
 OUT_DIR ?= .
 MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 
