@@ -3,13 +3,13 @@ DATA_DIRS ?= $(foreach v,u_10 v_10 slp t_10 sst rsds rlds q_10 rain snow ice,v1.
 OUT_DIR ?= .
 MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 
-# Tested with nco version 4.2.1 4.3.1, 4.5.4 4.6.4
+# Tested with nco version 4.6.4
 # Fails with nco 4.3.0 (on GFDL systems)
 # Wrong sums with nco 4.1.0 because of a "NCO" global attribute
 
 space :=
 space +=
-ALL_SOURCE = $(filter-out ice.COBESST.% sst.COBESST.%,$(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*))))
+ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*.nc))))
 ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)/$(f))))
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
@@ -26,20 +26,19 @@ $(OUT_DIR)/.%.md5sum: $(OUT_DIR)/%
 	@echo Calculating $(@F)
 	@cd $(@D); md5sum $(^F) | tee $(@F)
 
-Year = $(word 2,$(subst .,$(space),$(notdir $(1))))
+#Year = $(word 2,$(subst -,$(space),$(subst _,$(space),$(word 2,$(subst 1-4-0_,$(space),$(notdir $(1)))))))
+Year = $(shell echo $(1) | sed 's/.*_\([0-9][0-9][0-9][0-9]\).*/\1/')
 YearM1 = $(shell echo $(call Year,$(1))-1 | bc)
 YearP1 = $(shell echo $(call Year,$(1))+1 | bc)
 
 IfExist = $(shell test -f $(1) && echo $(1))
-PrevFileName = $(subst .$(call Year,$(1)).,.$(call YearM1,$(1)).,$(1))
+PrevFileName = $(subst $(call Year,$(1)),$(call YearM1,$(1)),$(1))
 PrevFile = $(call IfExist, $(call PrevFileName, $(1)))
-NextFileName = $(subst .$(call Year,$(1)).,.$(call YearP1,$(1)).,$(1))
+NextFileName = $(subst $(call Year,$(1)),$(call YearP1,$(1)),$(1))
 NextFile = $(call IfExist, $(call NextFileName, $(1)))
 
-TIME_HEAD = 0,7
-TIME_TAIL = 2912,
-$(OUT_DIR)/runoff%: TIME_TAIL = 364,
-$(OUT_DIR)/runoff%: TIME_HEAD = 0,0
+TIME_HEAD = 0,0
+TIME_TAIL = -1,
 
 $(OUT_DIR)/%.padded.nc: %.nc
 	@echo Making $@ from $(notdir $(call PrevFile,$<)) $(notdir $<) $(notdir $(call NextFile,$<))
