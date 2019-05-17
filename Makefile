@@ -16,6 +16,8 @@ ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
 NCKS = ncks -h
+NCAP2 = ncap2 -h
+NCATTED = ncatted -h
 
 all: $(ALL_TARGETS)
 check: $(MD5SUM_FILE)
@@ -46,12 +48,12 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	@echo Making $@ from $(notdir $(call PrevFile,$<)) $(notdir $<) $(notdir $(call NextFile,$<))
 	@rm -f head.nc tail.nc firstslice.nc
 	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,$(TIME_TAIL) $(call PrevFileName,$<) head.nc || :
-	@if [[ $(notdir $<) == *"195801010130"* ]] ; then ncks -h -d time,0,0 $< firstslice.nc ; ncap2 -h -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == *"195801010130"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
 	@test -f $(call NextFileName,$<) && $(NCKS) -d time,$(TIME_HEAD) $(call NextFileName,$<) tail.nc || :
 	@test -f tail.nc -a ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
 	@test -f head.nc -a ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
-	@F=$@; if [[ $${F:0:4} == "rlds"  && -f $@ ]] ; then ncatted -h -O -a comment,rlds,d,, $@; else echo ...skiping ; fi # Remove long comment in rlds files
+	@F=$@; if [[ $${F:0:4} == "rlds"  && -f $@ ]] ; then $(NCATTED) -O -a comment,rlds,d,, $@; else echo ...skiping ; fi # Remove long comment in rlds files
 	@rm -f head.nc tail.nc firstslice.nc
 
 clean:
