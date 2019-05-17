@@ -48,10 +48,10 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,$(TIME_TAIL) $(call PrevFileName,$<) head.nc || :
 	@if [[ $(notdir $<) == *"195801010130"* ]] ; then ncks -h -d time,0,0 $< firstslice.nc ; ncap2 -h -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
 	@test -f $(call NextFileName,$<) && $(NCKS) -d time,$(TIME_HEAD) $(call NextFileName,$<) tail.nc || :
-	@test ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
-	@test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
+	@test -f tail.nc -a ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
+	@test -f head.nc -a ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
-	@F=$@; if [[ $${F:0:4} == "rlds" ]] ; then ncatted -h -O -a comment,rlds,d,, $@; fi # Remove long comment in rlds files
+	@F=$@; if [[ $${F:0:4} == "rlds"  && -f $@ ]] ; then ncatted -h -O -a comment,rlds,d,, $@; else echo ...skiping ; fi # Remove long comment in rlds files
 	@rm -f head.nc tail.nc firstslice.nc
 
 clean:
