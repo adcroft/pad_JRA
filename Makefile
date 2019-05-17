@@ -28,7 +28,7 @@ $(MD5SUM_FILE): $(foreach f,$(ALL_TARGETS),$(dir $(f))/.$(notdir $(f)).md5sum)
 	@cat $^ > $@
 $(OUT_DIR)/.%.md5sum: $(OUT_DIR)/%
 	@echo Calculating $(@F)
-	@cd $(@D); md5sum $(^F) | tee $(@F)
+	-@cd $(@D); test -f $(^F) && md5sum $(^F) | tee $(@F)
 
 #Year = $(word 2,$(subst -,$(space),$(subst _,$(space),$(word 2,$(subst 1-4-0_,$(space),$(notdir $(1)))))))
 Year = $(shell echo $(1) | sed 's/.*_\([0-9][0-9][0-9][0-9]\).*/\1/')
