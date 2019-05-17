@@ -36,7 +36,7 @@ YearP1 = $(shell echo $(call Year,$(1))+1 | bc)
 IfExist = $(shell test -f $(1) && echo $(1))
 PrevFileName = $(subst $(call Year,$(1)),$(call YearM1,$(1)),$(1))
 PrevFile = $(call IfExist, $(call PrevFileName, $(1)))
-NextFileName = $(subst $(call Year,$(1)),$(call YearP1,$(1)),$(1))
+NextFileName = $(shell echo $(1) | sed 's/$(call Year,$(1)).*/$(call YearP1,$(1))\*/')
 NextFile = $(call IfExist, $(call NextFileName, $(1)))
 
 TIME_HEAD = 0,0
