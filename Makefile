@@ -11,7 +11,7 @@ SHELL=/bin/bash
 
 space :=
 space +=
-ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*.nc))))
+ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(foreach f,$(DATA_DIRS),$(shell ls -1 $(JRA_ROOT)/$(f)/*.nc | grep -v 2019))))
 ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)/$(f))))
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
@@ -53,7 +53,7 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	@test -f tail.nc -a ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
 	@test -f head.nc -a ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
-	@F=$@; if [[ $${F:0:4} == "rlds"  && -f $@ ]] ; then $(NCATTED) -O -a comment,rlds,d,, $@; else echo ...skiping ; fi # Remove long comment in rlds files
+	@F=$@; if [[ $${F:0:4} == "rlds" ]] ; then $(NCATTED) -O -a comment,rlds,d,, $@; fi # Remove long comment in rlds files
 	@rm -f head.nc tail.nc firstslice.nc
 
 clean:
