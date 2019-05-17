@@ -7,6 +7,8 @@ MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
 # Fails with nco 4.3.0 (on GFDL systems)
 # Wrong sums with nco 4.1.0 because of a "NCO" global attribute
 
+SHELL=/bin/bash
+
 space :=
 space +=
 ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(wildcard $(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)/*.nc))))
@@ -48,6 +50,7 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	@test ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
 	@test ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
 	@test -f head.nc -a -f tail.nc && $(NCRCAT) head.nc $< tail.nc $@ || :
+	@F=$@; if [[ $${F:0:4} == "rlds" ]] ; then ncatted -h -O -a comment,rlds,d,, $@; fi # Remove long comment in rlds files
 	@rm -f head.nc tail.nc
 
 clean:
