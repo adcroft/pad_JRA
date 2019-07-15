@@ -1,4 +1,4 @@
-70ee5fce035f913b8fd069b07484ca42  friver_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19580101-19581231.padded.nc
+8715b1d5dad171d9044db2dfe0976e39  friver_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19580101-19581231.padded.nc
 98a048e9c8a6bc80e3035a885eeb9d7f  friver_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19590101-19591231.padded.nc
 03aec27ae938295d2f70b0247e25d6a9  friver_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19600101-19601231.padded.nc
 ad7cfeda0cb2645a563e4e9c0921dd2a  friver_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19610101-19611231.padded.nc
@@ -120,7 +120,7 @@ c391536bf0742489c840aec6471915ca  huss_input4MIPs_atmosphericState_OMIP_MRI-JRA5
 527f00c6ffcf83ba413dff32063a3a5e  huss_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201601010000-201612312100.padded.nc
 543534ce7012a65ace5f0cc2ee12d333  huss_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201701010000-201712312100.padded.nc
 c8fd58f769dc853eb907e01bda7fb5d9  huss_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201801010000-201812312100.padded.nc
-8ecbeed9cf1508b82376ccf3bc8737f8  licalvf_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19580101-19581231.padded.nc
+959da9dac0bf42f8835ddd03b236beed  licalvf_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19580101-19581231.padded.nc
 3f389192ad101fcfcd2e8036987b0d16  licalvf_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19590101-19591231.padded.nc
 0fc7b0cf78cd28904bb48c5ed1120161  licalvf_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19600101-19601231.padded.nc
 c6a38c8749ec0d26e14a6cb917ba79cf  licalvf_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_19610101-19611231.padded.nc
@@ -486,7 +486,7 @@ f158f4138edaf000dc36d66884085c6a  rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA5
 4616a3da598fb1707757c59ea88908fb  rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201601010130-201612312230.padded.nc
 979db8c9df5670471c6fbe85e4ca3f03  rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201701010130-201712312230.padded.nc
 90dcfc1093093a1c74f73cf2e7e2c32f  rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201801010130-201812312230.padded.nc
-562f4448dff9e1b484ac40a2a8f17fcd  siconc_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19580101-19581231.padded.nc
+4167acc64b79d7ba5f664d3ff26db00a  siconc_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19580101-19581231.padded.nc
 a0a0c60ee42eb18f84eaaa9476ad475d  siconc_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19590101-19591231.padded.nc
 1c65faca32b1bda453cdaf352a21d8ff  siconc_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19600101-19601231.padded.nc
 e6592e0b258f23971808c3d474ab43e8  siconc_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19610101-19611231.padded.nc
@@ -669,7 +669,7 @@ b1b84384efda0ce5912e0c27e84fdf3e  tas_input4MIPs_atmosphericState_OMIP_MRI-JRA55
 b47228573dd48ac018aae9f69ce6c56b  tas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201601010000-201612312100.padded.nc
 3db037d18d5d720a9270aea28d1f8565  tas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201701010000-201712312100.padded.nc
 9ff92de9c8b705cfc6da7a3aa5773be9  tas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_201801010000-201812312100.padded.nc
-2925aa7463d6aa99b28fbd26efa1cd2a  tos_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19580101-19581231.padded.nc
+bdddf1501d4723cdf309b0ad3675429c  tos_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19580101-19581231.padded.nc
 9ea8cd29009db8faa021a04468386b0e  tos_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19590101-19591231.padded.nc
 5864b4160344b75b3649a9f186d77743  tos_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19600101-19601231.padded.nc
 3782f121aa5c74a89d8532c2c19dc5a4  tos_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gn_19610101-19611231.padded.nc
