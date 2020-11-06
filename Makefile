@@ -1,4 +1,4 @@
-JRA_ROOT ?= /lustre/f2/pdata/gfdl/gfdl_O/datasets/reanalysis/JRA55-do/v1.4.0/
+JRA_ROOT ?= /lustre/f2/dev/Raphael.Dussin/forcings/JRA55v1.5.0/
 DATA_DIRS ?= original
 OUT_DIR ?= .
 MD5SUM_FILE ?= $(OUT_DIR)/md5sums.txt
@@ -11,12 +11,12 @@ SHELL=/bin/bash
 
 space :=
 space +=
-ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(foreach f,$(DATA_DIRS),$(shell ls -1 $(JRA_ROOT)/$(f)/*.nc | grep -v 2019))))
+ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(foreach f,$(DATA_DIRS),$(shell ls -1 $(JRA_ROOT)/$(f)/*.nc | grep -v 2020))))
 ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)/$(f))))
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
-NCKS = ncks -h
-NCAP2 = ncap2 -h
+NCKS = ncks -h -O
+NCAP2 = ncap2 -h -O
 NCATTED = ncatted -h
 
 all: $(ALL_TARGETS)
