@@ -15,8 +15,8 @@ ALL_SOURCE = $(filter-out areacell% sftof% sos_% uos_% vos_%,$(notdir $(foreach 
 ALL_TARGETS = $(sort $(subst .nc,.padded.nc,$(foreach f,$(ALL_SOURCE),$(OUT_DIR)/$(f))))
 VPATH = $(subst $(space),:,$(foreach f,$(DATA_DIRS),$(JRA_ROOT)/$(f)))
 NCRCAT = ncrcat -h
-NCKS = ncks -h -O
-NCAP2 = ncap2 -h -O
+NCKS = ncks -h
+NCAP2 = ncap2 -h
 NCATTED = ncatted -h
 
 all: $(ALL_TARGETS)
@@ -48,8 +48,11 @@ $(OUT_DIR)/%.padded.nc: %.nc
 	@echo Making $@ from $(notdir $(call PrevFile,$<)) $(notdir $<) $(notdir $(call NextFile,$<))
 	@rm -f head.nc tail.nc firstslice.nc
 	@test -f $(call PrevFileName,$<) && $(NCKS) -d time,$(TIME_TAIL) $(call PrevFileName,$<) head.nc || :
-	@if [[ $(notdir $<) == *"195801010130"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
-	@if [[ $(notdir $<) == *"19580101"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == "prra"*"195801010130-"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == "prsn"*"195801010130-"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == "rsds"*"195801010130-"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == "rlds"*"195801010130-"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
+	@if [[ $(notdir $<) == *"19580101-"* ]] ; then $(NCKS) -d time,0,0 $< firstslice.nc ; $(NCAP2) -s 'time=time*0+21184.0' firstslice.nc head.nc ; fi
 	@test -f $(call NextFileName,$<) && $(NCKS) -d time,$(TIME_HEAD) $(call NextFileName,$<) tail.nc || :
 	@test -f tail.nc -a ! -f head.nc && $(NCRCAT) $< tail.nc $@ || :
 	@test -f head.nc -a ! -f tail.nc && $(NCRCAT) head.nc $< $@ || :
